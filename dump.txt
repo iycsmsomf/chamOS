@@ -1,0 +1,227 @@
+
+kernel.elf:	file format elf32-littleriscv
+
+Disassembly of section .text:
+
+80200000 <memset>:
+80200000: ca11         	beqz	a2, 0x80200014 <memset+0x14>
+80200002: 962a         	add	a2, a2, a0
+80200004: 86aa         	mv	a3, a0
+80200006: 00168713     	addi	a4, a3, 0x1
+8020000a: 00b68023     	sb	a1, 0x0(a3)
+8020000e: 86ba         	mv	a3, a4
+80200010: fec71be3     	bne	a4, a2, 0x80200006 <memset+0x6>
+80200014: 8082         	ret
+
+80200016 <boot>:
+80200016: 80220537     	lui	a0, 0x80220
+8020001a: 27c50513     	addi	a0, a0, 0x27c
+8020001e: 812a         	mv	sp, a0
+80200020: 0200006f     	j	0x80200040 <kernel_main>
+80200024: 8082         	ret
+
+80200026 <sbi_call>:
+80200026: 00000073     	ecall
+8020002a: 8082         	ret
+
+8020002c <putchar>:
+8020002c: 4885         	li	a7, 0x1
+8020002e: 4581         	li	a1, 0x0
+80200030: 4601         	li	a2, 0x0
+80200032: 4681         	li	a3, 0x0
+80200034: 4701         	li	a4, 0x0
+80200036: 4781         	li	a5, 0x0
+80200038: 4801         	li	a6, 0x0
+8020003a: 00000073     	ecall
+8020003e: 8082         	ret
+
+80200040 <kernel_main>:
+80200040: 1141         	addi	sp, sp, -0x10
+80200042: c606         	sw	ra, 0xc(sp)
+80200044: 802005b7     	lui	a1, 0x80200
+80200048: 27c58593     	addi	a1, a1, 0x27c
+8020004c: 80200537     	lui	a0, 0x80200
+80200050: 27c50513     	addi	a0, a0, 0x27c
+80200054: 40b50633     	sub	a2, a0, a1
+80200058: ca01         	beqz	a2, 0x80200068 <kernel_main+0x28>
+8020005a: 00158613     	addi	a2, a1, 0x1
+8020005e: 00058023     	sb	zero, 0x0(a1)
+80200062: 85b2         	mv	a1, a2
+80200064: fea61be3     	bne	a2, a0, 0x8020005a <kernel_main+0x1a>
+80200068: 80200537     	lui	a0, 0x80200
+8020006c: 25850513     	addi	a0, a0, 0x258
+80200070: 802005b7     	lui	a1, 0x80200
+80200074: 27558593     	addi	a1, a1, 0x275
+80200078: 2815         	jal	0x802000ac <printf>
+8020007a: 80200337     	lui	t1, 0x80200
+8020007e: 24830313     	addi	t1, t1, 0x248
+80200082: 4529         	li	a0, 0xa
+80200084: 00130293     	addi	t0, t1, 0x1
+80200088: 0341         	addi	t1, t1, 0x10
+8020008a: 4885         	li	a7, 0x1
+8020008c: 4601         	li	a2, 0x0
+8020008e: 4681         	li	a3, 0x0
+80200090: 4701         	li	a4, 0x0
+80200092: 4781         	li	a5, 0x0
+80200094: 4801         	li	a6, 0x0
+80200096: 4581         	li	a1, 0x0
+80200098: 00000073     	ecall
+8020009c: 0002c503     	lbu	a0, 0x0(t0)
+802000a0: 0285         	addi	t0, t0, 0x1
+802000a2: fe629ae3     	bne	t0, t1, 0x80200096 <kernel_main+0x56>
+802000a6: 10500073     	wfi
+802000aa: bff5         	j	0x802000a6 <kernel_main+0x66>
+
+802000ac <printf>:
+802000ac: 711d         	addi	sp, sp, -0x60
+802000ae: de06         	sw	ra, 0x3c(sp)
+802000b0: dc22         	sw	s0, 0x38(sp)
+802000b2: da26         	sw	s1, 0x34(sp)
+802000b4: d84a         	sw	s2, 0x30(sp)
+802000b6: d64e         	sw	s3, 0x2c(sp)
+802000b8: d452         	sw	s4, 0x28(sp)
+802000ba: d256         	sw	s5, 0x24(sp)
+802000bc: d05a         	sw	s6, 0x20(sp)
+802000be: ce5e         	sw	s7, 0x1c(sp)
+802000c0: cc62         	sw	s8, 0x18(sp)
+802000c2: ca66         	sw	s9, 0x14(sp)
+802000c4: c86a         	sw	s10, 0x10(sp)
+802000c6: c66e         	sw	s11, 0xc(sp)
+802000c8: cabe         	sw	a5, 0x54(sp)
+802000ca: ccc2         	sw	a6, 0x58(sp)
+802000cc: cec6         	sw	a7, 0x5c(sp)
+802000ce: c2ae         	sw	a1, 0x44(sp)
+802000d0: c4b2         	sw	a2, 0x48(sp)
+802000d2: c6b6         	sw	a3, 0x4c(sp)
+802000d4: c8ba         	sw	a4, 0x50(sp)
+802000d6: 00cc         	addi	a1, sp, 0x44
+802000d8: 02500a13     	li	s4, 0x25
+802000dc: 07200993     	li	s3, 0x72
+802000e0: 4d29         	li	s10, 0xa
+802000e2: 4ba5         	li	s7, 0x9
+802000e4: ccccd637     	lui	a2, 0xccccd
+802000e8: 07300a93     	li	s5, 0x73
+802000ec: 07800b13     	li	s6, 0x78
+802000f0: c42e         	sw	a1, 0x8(sp)
+802000f2: ccd60d93     	addi	s11, a2, -0x333
+802000f6: 80200c37     	lui	s8, 0x80200
+802000fa: 264c0c13     	addi	s8, s8, 0x264
+802000fe: a019         	j	0x80200104 <printf+0x58>
+80200100: 12058563     	beqz	a1, 0x8020022a <printf+0x17e>
+80200104: 00054583     	lbu	a1, 0x0(a0)
+80200108: ff459ce3     	bne	a1, s4, 0x80200100 <printf+0x54>
+8020010c: 00154583     	lbu	a1, 0x1(a0)
+80200110: 00150c93     	addi	s9, a0, 0x1
+80200114: 00b9cb63     	blt	s3, a1, 0x8020012a <printf+0x7e>
+80200118: 09458763     	beq	a1, s4, 0x802001a6 <printf+0xfa>
+8020011c: 06400513     	li	a0, 0x64
+80200120: 0aa58763     	beq	a1, a0, 0x802001ce <printf+0x122>
+80200124: 8566         	mv	a0, s9
+80200126: fdf9         	bnez	a1, 0x80200104 <printf+0x58>
+80200128: a8f5         	j	0x80200224 <printf+0x178>
+8020012a: 09558263     	beq	a1, s5, 0x802001ae <printf+0x102>
+8020012e: 8566         	mv	a0, s9
+80200130: fd659ae3     	bne	a1, s6, 0x80200104 <printf+0x58>
+80200134: 4522         	lw	a0, 0x8(sp)
+80200136: 00450593     	addi	a1, a0, 0x4
+8020013a: c42e         	sw	a1, 0x8(sp)
+8020013c: 4100         	lw	s0, 0x0(a0)
+8020013e: 01c45513     	srli	a0, s0, 0x1c
+80200142: 9562         	add	a0, a0, s8
+80200144: 00054503     	lbu	a0, 0x0(a0)
+80200148: 35d5         	jal	0x8020002c <putchar>
+8020014a: 00441513     	slli	a0, s0, 0x4
+8020014e: 8171         	srli	a0, a0, 0x1c
+80200150: 9562         	add	a0, a0, s8
+80200152: 00054503     	lbu	a0, 0x0(a0)
+80200156: 3dd9         	jal	0x8020002c <putchar>
+80200158: 00841513     	slli	a0, s0, 0x8
+8020015c: 8171         	srli	a0, a0, 0x1c
+8020015e: 9562         	add	a0, a0, s8
+80200160: 00054503     	lbu	a0, 0x0(a0)
+80200164: 35e1         	jal	0x8020002c <putchar>
+80200166: 00c41513     	slli	a0, s0, 0xc
+8020016a: 8171         	srli	a0, a0, 0x1c
+8020016c: 9562         	add	a0, a0, s8
+8020016e: 00054503     	lbu	a0, 0x0(a0)
+80200172: 3d6d         	jal	0x8020002c <putchar>
+80200174: 01041513     	slli	a0, s0, 0x10
+80200178: 8171         	srli	a0, a0, 0x1c
+8020017a: 9562         	add	a0, a0, s8
+8020017c: 00054503     	lbu	a0, 0x0(a0)
+80200180: 3575         	jal	0x8020002c <putchar>
+80200182: 01441513     	slli	a0, s0, 0x14
+80200186: 8171         	srli	a0, a0, 0x1c
+80200188: 9562         	add	a0, a0, s8
+8020018a: 00054503     	lbu	a0, 0x0(a0)
+8020018e: 3d79         	jal	0x8020002c <putchar>
+80200190: 01841513     	slli	a0, s0, 0x18
+80200194: 8171         	srli	a0, a0, 0x1c
+80200196: 9562         	add	a0, a0, s8
+80200198: 00054503     	lbu	a0, 0x0(a0)
+8020019c: 3d41         	jal	0x8020002c <putchar>
+8020019e: 883d         	andi	s0, s0, 0xf
+802001a0: 9462         	add	s0, s0, s8
+802001a2: 00044583     	lbu	a1, 0x0(s0)
+802001a6: 852e         	mv	a0, a1
+802001a8: 3551         	jal	0x8020002c <putchar>
+802001aa: 8566         	mv	a0, s9
+802001ac: bfa1         	j	0x80200104 <printf+0x58>
+802001ae: 4522         	lw	a0, 0x8(sp)
+802001b0: 00450593     	addi	a1, a0, 0x4
+802001b4: c42e         	sw	a1, 0x8(sp)
+802001b6: 4104         	lw	s1, 0x0(a0)
+802001b8: 0004c503     	lbu	a0, 0x0(s1)
+802001bc: c909         	beqz	a0, 0x802001ce <printf+0x122>
+802001be: 0485         	addi	s1, s1, 0x1
+802001c0: 0ff57513     	zext.b	a0, a0
+802001c4: 35a5         	jal	0x8020002c <putchar>
+802001c6: 0004c503     	lbu	a0, 0x0(s1)
+802001ca: 0485         	addi	s1, s1, 0x1
+802001cc: f975         	bnez	a0, 0x802001c0 <printf+0x114>
+802001ce: 4522         	lw	a0, 0x8(sp)
+802001d0: 00450593     	addi	a1, a0, 0x4
+802001d4: c42e         	sw	a1, 0x8(sp)
+802001d6: 4104         	lw	s1, 0x0(a0)
+802001d8: 0004c663     	bltz	s1, 0x802001e4 <printf+0x138>
+802001dc: 4505         	li	a0, 0x1
+802001de: 03a4e363     	bltu	s1, s10, 0x80200204 <printf+0x158>
+802001e2: a809         	j	0x802001f4 <printf+0x148>
+802001e4: 02d00513     	li	a0, 0x2d
+802001e8: 3591         	jal	0x8020002c <putchar>
+802001ea: 409004b3     	neg	s1, s1
+802001ee: 4505         	li	a0, 0x1
+802001f0: 01a4ea63     	bltu	s1, s10, 0x80200204 <printf+0x158>
+802001f4: 00151593     	slli	a1, a0, 0x1
+802001f8: 050e         	slli	a0, a0, 0x3
+802001fa: 952e         	add	a0, a0, a1
+802001fc: 02a4d5b3     	divu	a1, s1, a0
+80200200: febbeae3     	bltu	s7, a1, 0x802001f4 <printf+0x148>
+80200204: 842a         	mv	s0, a0
+80200206: 02a4d933     	divu	s2, s1, a0
+8020020a: 0ff97513     	zext.b	a0, s2
+8020020e: 3d39         	jal	0x8020002c <putchar>
+80200210: 02890533     	mul	a0, s2, s0
+80200214: 8c89         	sub	s1, s1, a0
+80200216: 03b43533     	mulhu	a0, s0, s11
+8020021a: 810d         	srli	a0, a0, 0x3
+8020021c: ffa474e3     	bgeu	s0, s10, 0x80200204 <printf+0x158>
+80200220: 8566         	mv	a0, s9
+80200222: b5cd         	j	0x80200104 <printf+0x58>
+80200224: 02500513     	li	a0, 0x25
+80200228: 3511         	jal	0x8020002c <putchar>
+8020022a: 50f2         	lw	ra, 0x3c(sp)
+8020022c: 5462         	lw	s0, 0x38(sp)
+8020022e: 54d2         	lw	s1, 0x34(sp)
+80200230: 5942         	lw	s2, 0x30(sp)
+80200232: 59b2         	lw	s3, 0x2c(sp)
+80200234: 5a22         	lw	s4, 0x28(sp)
+80200236: 5a92         	lw	s5, 0x24(sp)
+80200238: 5b02         	lw	s6, 0x20(sp)
+8020023a: 4bf2         	lw	s7, 0x1c(sp)
+8020023c: 4c62         	lw	s8, 0x18(sp)
+8020023e: 4cd2         	lw	s9, 0x14(sp)
+80200240: 4d42         	lw	s10, 0x10(sp)
+80200242: 4db2         	lw	s11, 0xc(sp)
+80200244: 6125         	addi	sp, sp, 0x60
+80200246: 8082         	ret

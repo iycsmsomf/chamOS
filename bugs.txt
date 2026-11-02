@@ -1,0 +1,2 @@
+# in kernel.ld . = 0x8... has space after .
+#
