@@ -1,0 +1,8 @@
+https://operating-system-in-1000-lines.vercel.app/
+
+BOOKS - 
+1)OSTEP - CHAPTER-18(PAGING)
+        -CHAPTER(PROCESS)-VIRTUALIZATION PROCESSES,PROCESS API, SCHEDULING
+        -
+
+
